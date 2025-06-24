@@ -1,0 +1,7 @@
+feedparser
+beautifulsoup4
+requests
+pandas
+sentence-transformers
+scikit-learn
+openpyxl
