@@ -1,0 +1,27 @@
+name: Ejecutar script diario
+
+on:
+  schedule:
+    - cron: '0 10 * * *'  # Ejecuta a las 10:00 UTC todos los días (5:00am en Colombia)
+  workflow_dispatch:  # Permite ejecución manual también
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clonar el repositorio
+      uses: actions/checkout@v3
+
+    - name: Configurar Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Instalar dependencias
+      run: |
+        pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Ejecutar script
+      run: python scraper.py
