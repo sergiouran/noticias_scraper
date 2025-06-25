@@ -5,6 +5,9 @@ on:
     - cron: '0 10 * * *'  # Todos los días a las 10:00 UTC (5:00 AM Colombia)
   workflow_dispatch:      # Permite ejecución manual
 
+permissions:
+  contents: write
+
 jobs:
   scraper:
     runs-on: ubuntu-latest
