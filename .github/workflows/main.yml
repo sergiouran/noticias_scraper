@@ -28,7 +28,7 @@ jobs:
 
       - name: Ejecutar notebook
         run: |
-          jupyter nbconvert --to notebook --execute prueba2.ipynb --output prueba2_ejecutado.ipynb --ExecutePreprocessor.timeout=1800
+          jupyter nbconvert --to notebook --execute prueba2.ipynb --output prueba2_ejecutado.ipynb --ExecutePreprocessor.timeout=7200
 
       - name: Subir archivo Excel generado
         uses: stefanzweifel/git-auto-commit-action@v5
