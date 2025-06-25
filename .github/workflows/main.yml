@@ -2,15 +2,15 @@ name: Ejecutar Scraper Diario
 
 on:
   schedule:
-    - cron: '0 10 * * *'   # Todos los días a las 10:00 UTC (5:00 AM Colombia)
-  workflow_dispatch:       # Permite ejecutarlo manualmente
+    - cron: '0 10 * * *'  # Todos los días a las 10:00 UTC (5:00 AM Colombia)
+  workflow_dispatch:      # Permite ejecución manual
 
 jobs:
-  ejecutar-scraper:
+  scraper:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clonar el repositorio
+      - name: Clonar repositorio
         uses: actions/checkout@v4
 
       - name: Configurar Python
@@ -18,21 +18,20 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Instalar dependencias
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+      - name: Instalar dependencias del sistema
+        run: sudo apt-get install -y python3-dev build-essential
 
-      - name: Instalar Jupyter
+      - name: Instalar dependencias del proyecto
         run: |
-          pip install notebook ipykernel nbconvert
+          pip install --upgrade pip
+          pip install feedparser beautifulsoup4 requests pandas sentence-transformers scikit-learn openpyxl tqdm notebook ipykernel nbconvert
 
       - name: Ejecutar notebook
         run: |
-          jupyter nbconvert --to notebook --execute prueba2.ipynb --output prueba2_ejecutado.ipynb
+          jupyter nbconvert --to notebook --execute prueba2.ipynb --output prueba2_ejecutado.ipynb --ExecutePreprocessor.timeout=600
 
-      - name: Subir resultados al repositorio
+      - name: Subir archivo Excel generado
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Resultados actualizados automáticamente"
-          file_pattern: 'resultados/*.xlsx'
+          commit_message: "Actualización automática de resultados"
+          file_pattern: "resultados/*.xlsx"
